@@ -4,3 +4,4 @@ __pycache__/
 .env
 .env.*
 tmp/
+/output/pdf/Titanic_Analysis_Report_AR.pdf

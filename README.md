@@ -1,92 +1,54 @@
-# Titanic: Data Cleaning & Survival Analysis
+# Titanic: Data Cleaning and Survival Analysis
 
-Final delivery documentation for the Titanic passenger-data cleaning and descriptive survival analysis.
+**Abdelmonem | Data Analysis**
 
-**Prepared by:** Abdelmonem | **Report date:** 19 October 2026
+Analysis of 891 Titanic passenger records using Python, pandas, NumPy, Matplotlib and Seaborn.
 
-![Survival comparisons](figures/08_survival_rates.png)
+![Passenger survival counts](figures/01_survival_counts.png)
 
-## Delivery scope
+## Findings
 
-The analysis examines missing values, ticket fares, family relationships and survival patterns in the provided Titanic training data. The delivery contains an executed notebook, cleaned data, nine chart exports, a computed metrics summary and a detailed Arabic report. Processing decisions, validation results and analytical limitations are documented for review and reuse.
+- 342 survivors and 549 non-survivors: **38.38% overall survival**.
+- Female survival: **74.20%**; male survival: **18.89%**.
+- First-class survival: **62.96%**; second class: **47.28%**; third class: **24.24%**.
 
-### Questions explored
+These are descriptive associations within the supplied sample, not causal effects or predictive accuracy.
 
-- How complete are the passenger records, and how should missing values be handled?
-- How do survival counts and rates vary by sex and passenger class?
-- How does age imputation affect the age distribution?
-- How do family size and recorded cabin information relate to survival?
-- Are high fares necessarily data errors?
+## Files
 
-## Key findings
-
-- **891 passengers**, **342 survivors**, **38.38% overall survival**.
-- Female survival was **74.20%**, compared with **18.89%** for males.
-- Survival rates were **62.96%** in first class, **47.28%** in second class and **24.24%** in third class.
-- **177 missing ages** were filled using median age within passenger-class and sex groups, with missingness preserved in an indicator.
-- **2 missing embarkation values** were filled with the most frequent port.
-- **687 missing cabin records** remain explicitly documented. `HasCabin` measures whether a cabin was recorded, not whether a passenger had one.
-- High ticket fares are flagged with the IQR rule and retained for analysis.
-
-These are descriptive associations within the supplied training sample. They do not establish causation or predictive performance.
-
-## Delivery files
-
-| File or folder | Purpose |
+| File | Purpose |
 |---|---|
-| [Titanic_analysis_updated.ipynb](Titanic_analysis_updated.ipynb) | Complete analysis code and executed results |
-| [Titanic_cleaning.ipynb](Titanic_cleaning.ipynb) | Historical source notebook retained for traceability |
-| `train.csv` | Original supplied passenger dataset |
-| [figures/](figures/) | Nine final PNG chart exports |
-| [figures/original/](figures/original/) | Historical source figures retained for traceability |
-| [output/titanic_cleaned.csv](output/titanic_cleaned.csv) | Cleaned data with engineered features |
-| [output/analysis_summary.json](output/analysis_summary.json) | Computed analysis metrics |
-| [Detailed Arabic PDF](output/pdf/Titanic_Client_Delivery_Report_AR.pdf) | Executive summary, scope, methods, chart interpretations, recommendations and handover checks |
-| [English delivery PDF](output/pdf/Titanic_Client_Delivery_Report_EN.pdf) | English counterpart with the same findings, figures and delivery scope |
-| [Editable Arabic report](output/Client_Delivery_Report_AR.md) | Editable counterpart of the final PDF |
-| [Editable English report](output/Client_Delivery_Report_EN.md) | Editable counterpart of the English PDF |
-| [CHANGELOG.md](CHANGELOG.md) | Changes compared with the original notebook |
-| [requirements.txt](requirements.txt) | Notebook dependencies |
+| [Titanic_cleaning.ipynb](Titanic_cleaning.ipynb) | Analysis code and saved outputs |
+| [train.csv](train.csv) | Raw passenger data |
+| [figures/](figures/) | Seven figures from the notebook |
+| [Arabic PDF](output/pdf/Titanic_Report_AR.pdf) | Methods, all seven figures, interpretations and limitations |
+| [English PDF](output/pdf/Titanic_Report_EN.pdf) | English analysis report |
+| [Arabic text](output/Titanic_Report_AR.md) | Editable report |
+| [English text](output/Titanic_Report_EN.md) | Editable report |
+| [requirements.txt](requirements.txt) | Python dependencies |
 
-## Validation checks
+## Run
 
-The delivered notebook was executed from top to bottom: **15 code cells completed without errors**. Checks confirmed preservation of 891 rows and the survival labels, unique passenger IDs, documented remaining Cabin missingness and existence of all nine final chart exports. The cleaned CSV contains 19 columns.
-
-## Run locally
-
-Use Python 3.12 or a compatible Python environment:
+Install the dependencies:
 
 ```bash
-python -m venv .venv
-# Windows PowerShell:
-.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
 python -m jupyterlab
 ```
 
-Open `Titanic_analysis_updated.ipynb` with this repository as the working directory, select the Python kernel and choose **Restart Kernel and Run All**. `train.csv` must be in that working directory. Outputs are saved under `figures/` and `output/`.
+Open `Titanic_cleaning.ipynb` from the project directory containing `train.csv`, select the Python kernel and choose **Restart Kernel and Run All**. On Colab, upload the CSV to the working directory. Figures and tables are displayed inside the notebook; the code does not automatically export PNGs or a cleaned CSV.
 
-On Google Colab, upload the revised notebook and `train.csv` to the same working directory. Download generated outputs before the temporary session ends.
+## Workflow
 
-## Cleaning decisions
+1. Inspect records, column types, summary statistics, duplicates and missing values.
+2. Trim column names and embarkation text, and normalize empty embarkation entries.
+3. Fill the two missing embarkation values with S, the observed mode.
+4. Fill 177 missing ages with median age within passenger-class and sex groups.
+5. Leave Cabin unchanged with 687 missing values. The cabin-feature lines are commented out.
+6. Identify 116 fares above the overall IQR upper fence of 65.6344 without removing them.
+7. Derive FamilySize, IsAlone and Is Child; the executed child condition is Age < 16.
+8. Display survival counts, counts by sex and class, two age histograms, a fare boxplot and a full pairplot.
 
-1. Keep the raw dataframe and source CSV unchanged.
-2. Validate column availability, passenger identifiers and expected value ranges.
-3. Trim surrounding whitespace and normalize empty text values.
-4. Fill embarkation with the observed mode and age with grouped medians, tracking both imputations.
-5. Retain missing cabin information and derive `HasCabin`.
-6. Flag high fares without automatically removing legitimate expensive tickets.
-7. Derive `FamilySize`, `IsAlone` and `IsChild`; distinguish observed and imputed ages.
-8. Compare both counts and rates, annotate charts and export reproducible results.
+## Limitations
 
-## Analytical limitations and source documentation
-
-The local `train.csv` was supplied with the project and uses the familiar Titanic training-data schema. Its original download location and redistribution terms were not independently documented in the supplied files. No new license is asserted for the dataset.
-
-The training sample does not cover every person on the ship. Missing ages and cabin information may introduce bias. Median imputation can change distribution shapes. Ticket fares may reflect shared bookings. Survival comparisons are not adjusted causal effects, and no machine-learning model is trained or evaluated.
-
-If extending this work to prediction, split the data first and fit imputation only on the training fold to avoid leakage.
-
-## Tools
-
-Python · pandas · NumPy · Matplotlib · Seaborn · Jupyter Notebook
+Missing cabin records remain unresolved. Age imputation can affect distribution peaks, and the code does not preserve an imputation indicator. High fares may be valid shared bookings. The sample does not cover every passenger, and no predictive model or significance tests are included. The supplied files do not independently document the dataset download source or usage terms.
