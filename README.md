@@ -42,7 +42,9 @@ These are descriptive associations within the supplied training sample. They do 
 | [output/titanic_cleaned.csv](output/titanic_cleaned.csv) | Cleaned data with engineered features |
 | [output/analysis_summary.json](output/analysis_summary.json) | Computed analysis metrics |
 | [Detailed Arabic PDF](output/pdf/Titanic_Client_Delivery_Report_AR.pdf) | Executive summary, scope, methods, chart interpretations, recommendations and handover checks |
+| [English delivery PDF](output/pdf/Titanic_Client_Delivery_Report_EN.pdf) | English counterpart with the same findings, figures and delivery scope |
 | [Editable Arabic report](output/Client_Delivery_Report_AR.md) | Editable counterpart of the final PDF |
+| [Editable English report](output/Client_Delivery_Report_EN.md) | Editable counterpart of the English PDF |
 | [CHANGELOG.md](CHANGELOG.md) | Changes compared with the original notebook |
 | [requirements.txt](requirements.txt) | Notebook dependencies |
 
