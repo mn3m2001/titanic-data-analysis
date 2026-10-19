@@ -56,4 +56,4 @@ Missing cabin records remain unresolved. Age imputation can affect distribution 
 
 ## Report layout
 
-After the executive summary, both reports begin with Ages After Imputation, Observed Ages Only, and Age, Fare and Family Size. Their explanations appear before the corresponding figures.
+Both reports present all eight visual analyses first: survival rates, sex and class counts, the age comparison, the focused pairplot, fares and overall survival. Data quality, cleaning methods, limitations and reproduction instructions follow. Each figure has its explanation directly below it.

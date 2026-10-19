@@ -1,203 +1,137 @@
-# Titanic Data Analysis Report
+# Titanic Passenger Survival Analysis
 
 Prepared by Abdelmonem | 20 October 2026
 
+## Survival patterns at a glance
 
-## Titanic Data Analysis Report
+### Figure 1. Comparing survival rates
 
-### Executive summary
+![Comparing survival rates](../figures/08_survival_rates.png)
 
-This analysis examines 891 passenger records to assess data quality and describe survival patterns. It covers missing-value handling, family and age features, and interpretation of the eight figures produced by the notebook.
+The vertical axis shows the percentage surviving within each group, with values labeled above the bars. Female survival was 74.20%, compared with 18.89% for males. Rates fell from 62.96% in first class to 24.24% in third class. Passengers with recorded relatives had 50.56% survival, versus 30.35% among those classified as alone. These are descriptive associations, not proven causes.
 
-### Key findings
+### What stands out?
 
-342 passengers survived (38.38%); 549 did not survive. Female survival was 74.20%, compared with 18.89% for males. Survival rates were 62.96% in first class, 47.28% in second class and 24.24% in third class.
+The largest visible difference is between sex groups, alongside a clear ticket-class gradient. The report presents all eight figures and their findings first, followed by data quality, cleaning decisions, limitations and reproduction steps.
 
-### Delivery status and scope
 
-The delivery contains the notebook, raw dataset, eight figure exports and Arabic and English reports. The work covers data cleaning and descriptive analysis; it does not include a predictive model or causal-effect estimation.
+## Who survived? Sex and ticket class
 
-### Interpretation
+### Figure 2. Survival by sex
 
-Rates apply to the supplied dataset. Class, sex, age and recording practices may overlap; observed differences do not establish that one variable caused survival.
+![Survival by sex](../figures/02_sex_survival_counts.png)
 
+Blue indicates non-survivors and orange indicates survivors. Of 314 females, 233 survived; of 577 males, 109 survived. The survival-rate gap is 55.31 percentage points. Because group sizes differ, read rates alongside counts. This comparison does not isolate class or age effects.
 
-## 4.4 Ages After Imputation
+### Figure 3. Survival by ticket class
 
-### How to read the figure
+![Survival by ticket class](../figures/03_class_survival_counts.png)
 
-This figure shows age after 177 missing values were filled using median age within sex and ticket-class groups. Each bar covers five years; color distinguishes survival outcomes. KDE lines summarize distribution shape rather than survival rates.
+First class: 136 survivors out of 216 (62.96%). Second class: 87 out of 184 (47.28%). Third class: 119 out of 491 (24.24%). Third class is the largest group and has the lowest survival rate in the sample. Read deaths in the context of group size; the result does not establish an independent causal effect of class.
 
-### Finding and limitations
 
-All 891 passengers are included. Many ages fall among young people and adults. Imputation can create peaks at group-median ages, so compare this figure with observed ages only. A larger count at an age does not imply a higher chance of survival.
+## Age: the effect of imputation
 
-![4.4 Ages After Imputation](../figures/04_age_distribution.png)
+### Figure 4. Ages after imputation
 
+![Ages after imputation](../figures/04_age_distribution.png)
 
-## 4.5 Observed Ages Only
+Each bar spans five years. This view includes all 891 passengers, including 177 ages filled using sex-and-class group medians. KDE lines summarize distribution shape, not survival rates. Imputation may produce peaks at median ages; compare with observed ages below.
 
-### How to read the figure
+### Figure 5. Observed ages only
 
-Using the same age intervals, this figure selects passengers whose ages were recorded in the raw df using df[Age].notna(). Selection is based on the raw data, not the filled Age column. It includes 714 passengers and excludes 177 estimated ages from this figure only.
+![Observed ages only](../figures/05_age_observed_only.png)
 
-### Finding and limitations
+This view includes 714 ages recorded in the raw data and excludes 177 estimated ages from this figure only. No rows are removed from the cleaned dataset. Differences reveal sensitivity to imputation, but do not eliminate missingness bias: known ages may differ from missing ages.
 
-The comparison shows how distribution shape depends on imputation. No rows are removed from the cleaned dataset; exclusion is limited to this plot. Passengers with known ages may differ from those with missing ages, so this check does not eliminate recording bias or establish an age effect on survival.
 
-![4.5 Observed Ages Only](../figures/05_age_observed_only.png)
+## Age, fare and family relationships
 
+### Figure 6. Age, fare and family size
 
-## 4.7 Age, Fare and Family Size
+![Age, fare and family size](../figures/07_pairplot.png)
 
-### How to read the figure
+Off-diagonal panels compare two variables: column labels identify the horizontal axis and row labels the vertical axis. Diagonal panels show individual distributions, and color identifies survival. Overlapping points mean these variables do not fully separate survivors from non-survivors. Age includes imputed values, fares are skewed and family size is discrete. Visual relationships do not demonstrate causation or predictive accuracy.
 
-The matrix contains only Age, Fare and FamilySize. Off-diagonal panels compare two variables: column labels identify the horizontal axis and row labels the vertical axis. Diagonal panels show individual distributions. Color distinguishes survival outcomes.
+### How to use this view
 
-### Finding and limitations
+Use the matrix to explore patterns and overlap, then return to numerical comparisons. Passenger identifiers and binary features are excluded; the focus is age, ticket fare and family size.
 
-Survivor and non-survivor points overlap, so these variables do not completely separate outcomes. Age includes estimated values, fares are strongly skewed and family size is discrete. Natural clusters and visual associations do not establish causation or predictive accuracy. Passenger identifiers and binary features are not included.
 
-![4.7 Age, Fare and Family Size](../figures/07_pairplot.png)
+## Ticket fares: differences by class
 
+### Figure 7. Ticket fares by class
 
-## 1. Data Scope and Quality
+![Ticket fares by class](../figures/06_fare_boxplot.png)
 
-### Dataset structure
+The line inside each box is the median; box boundaries are the first and third quartiles. Whiskers extend to the most distant observations within 1.5 IQR of the box boundaries. Outside points are statistical outliers, not confirmed errors. First class shows higher fares and wider variation, with a maximum near 512.33. Whiskers are class-specific; the code separately applies an overall threshold of 65.6344, identifying and retaining 116 records.
 
-train.csv contains 891 rows and 12 columns. Each row represents a passenger. The code uses head, info and describe to inspect structure, types and descriptive statistics.
+### Treatment of high fares
 
-### Field definitions
+All 116 high-fare records remain in the analysis; statistical detection does not prove error. Fare may reflect a shared booking and is not personal income. The figure uses the original, non-logarithmic scale.
 
-Survived: 0 = did not survive, 1 = survived. Pclass: first, second or third ticket class. Sex and Age: sex and age in years. SibSp: siblings/spouses aboard. Parch: parents/children aboard. Fare: recorded ticket fare. Cabin: cabin record, if available. Embarked: embarkation port. PassengerId, Name and Ticket are identifying fields.
 
-### Missing values and duplicates
+## The overall survival outcome
 
-Age is missing in 177 records (19.87%), Cabin in 687 (77.10%) and Embarked in two (0.22%). There are no exact duplicate rows in this file. The code counts duplicates and does not delete rows.
+### Figure 8. Overall survival outcomes
 
-### Source limitations
+![Overall survival outcomes](../figures/01_survival_counts.png)
 
-The supplied training sample does not cover every passenger on the ship. The files do not independently document the original download source or usage terms. Fare may reflect a shared booking and is not a measure of passenger income.
+Survived = 0 means did not survive; 1 means survived. There were 342 survivors and 549 non-survivors, giving an overall survival rate of 38.38%. Labels above the bars are passenger counts, not percentages. This rate is a general reference for group comparisons, not a fixed probability for each passenger.
 
+### Visual findings in context
 
-## 2. Cleaning and Derived Features
+Survival in this sample is associated with sex, class and recorded relatives. Age analysis demonstrates why observed and imputed values should be distinguished when interpreting distribution shapes. Outcomes overlap in the pairplot, and potentially legitimate high fares remain in the dataset.
 
-### Working copy and text cleanup
 
-The code creates df_clean from df, strips column names and Embarked values, and replaces empty Embarked text with missing values. It reads train.csv from the current working directory.
+## Data and cleaning methodology
 
-### Missing-value handling
+### Data scope and initial inspection
 
-The code calculates the Embarked mode, then explicitly uses S to fill the two missing records. It fills 177 ages with the median within the combined Pclass and Sex group. No separate age-imputation indicator is retained; use the raw dataset to distinguish observed and estimated ages.
+The raw train.csv file contains 891 rows and 12 columns. The code displays head, info and describe, and counts exact duplicates; there are none. Findings apply to the supplied training sample, not every passenger on the ship.
 
-### Cabin and ticket fares
+### 1. Working copy and text cleanup
 
-Cabin remains present with 687 missing values. The lines creating Has_Cabin and dropping Cabin are commented out and do not run. For Fare, the code calculates Q3 + 1.5 x IQR = 65.6344 and displays 116 observations above the threshold. It does not delete them or add an outlier flag.
+The code creates df_clean from df, strips column names and Embarked values, and converts empty embarkation text to missing values. The raw source remains unchanged.
 
-### Family and child features
+### 2. Age and embarkation imputation
 
-FamilySize = SibSp + Parch + 1. IsAlone equals 1 when recorded family size is 1. The Is Child column uses Age < 16 and identifies 83 passengers. The comment above it says >16, but the executed operation is younger than 16. The working dataframe contains 15 columns; the code does not export a cleaned CSV.
+Age is missing in 177 records (19.87%) and is filled using the median within each Pclass/Sex group. Embarkation is missing in two records (0.22%); the code calculates the mode and explicitly fills them with S. No permanent age-imputation flag is added; the observed-age chart uses raw df missingness.
 
+### 3. Cabin records and high fares
 
-## 3.1 Survivor and Non-survivor Counts
+687 Cabin values remain missing (77.10%). The Has_Cabin creation and Cabin removal lines are commented out and do not execute. The code calculates the IQR and displays fares above 65.6344; it neither deletes them nor creates a permanent outlier flag.
 
-![3.1 Survivor and Non-survivor Counts](../figures/01_survival_counts.png)
 
-### How to read the figure
+## Variables and interpretation limits
 
-The horizontal axis shows Survived as 0 or 1; the vertical axis shows passenger counts. Labels above the bars give the actual totals. A value of 0 means did not survive, and 1 means survived.
+### Core fields
 
-### Finding and interpretation
+Survived: 0 = did not survive, 1 = survived. Pclass: ticket class from 1 to 3. Sex and Age: sex and age in years. SibSp: siblings/spouses; Parch: parents/children aboard. Fare: recorded price; Cabin: recorded cabin identifier; Embarked: embarkation port. PassengerId, Name and Ticket are identifying fields.
 
-549 passengers did not survive and 342 survived. Overall survival is 38.38%. The outcome groups are unequal in size. This rate provides a descriptive reference for later comparisons, not a fixed probability for every individual.
+### Derived features
 
+FamilySize = SibSp + Parch + 1. IsAlone equals 1 when recorded family size is 1; it does not imply the absence of friends. Is Child uses Age < 16 and identifies 83 passengers, all with observed ages in this file. The code comment still says >16, while the actual operation uses <16. The working dataframe contains 15 columns.
 
-## 3.2 Sex and Survival
+### What limits the findings?
 
-![3.2 Sex and Survival](../figures/02_sex_survival_counts.png)
+Missing Cabin information does not mean no cabin existed. Imputation does not recover true ages, and missing-age records may differ from observed-age records. Fare can reflect a shared booking. No confidence intervals, significance tests or adjusted models are included; plots do not demonstrate causation or predictive accuracy. The available files do not independently document the original download source or usage terms.
 
-### How to read the figure
 
-The horizontal axis shows male and female passengers. Color indicates outcome: blue = 0, did not survive; orange = 1, survived. Compare the two bars within each group while accounting for different group sizes.
-
-### Finding and interpretation
-
-Males: 468 non-survivors and 109 survivors out of 577, a survival rate of 18.89%. Females: 81 non-survivors and 233 survivors out of 314, a rate of 74.20%. The difference is 55.31 percentage points. Rates are calculated here to interpret the plotted counts; the figure does not isolate age or class effects.
-
-
-## 3.3 Ticket Class and Survival
-
-![3.3 Ticket Class and Survival](../figures/03_class_survival_counts.png)
-
-### How to read the figure
-
-The horizontal axis shows Pclass from 1 to 3; the vertical axis shows passenger counts. Blue indicates non-survivors and orange indicates survivors. Compare rates within class because class sizes differ.
-
-### Finding and interpretation
-
-First class: 136 survivors and 80 non-survivors, a 62.96% survival rate. Second class: 87 survivors and 97 non-survivors, a 47.28% rate. Third class: 119 survivors and 372 non-survivors, a 24.24% rate. Third class is largest, with 491 passengers. Differences are descriptive and may overlap with sex, age and passenger location.
-
-
-## 3.6 Ticket Fares by Class
-
-![3.6 Ticket Fares by Class](../figures/06_fare_boxplot.png)
-
-### How to read the figure
-
-The horizontal axis shows ticket class and the vertical axis shows Fare on its original scale. The line inside each box is the median; box boundaries are the first and third quartiles. Whiskers extend to the most distant observations within 1.5 IQR of the box boundaries. Points beyond them are statistical outliers.
-
-### Finding and interpretation
-
-First class shows higher fares and wider variation, with a maximum of approximately 512.33. Distant points are not confirmed errors. Boxplot whiskers are calculated within each class, whereas the outlier list in the code uses an overall file threshold of 65.6344. High fares are not deleted, and the figure does not use a logarithmic scale.
-
-
-## 3.8 Comparing Survival Percentages
-
-![3.8 Comparing Survival Percentages](../figures/08_survival_rates.png)
-
-### How to read the figure
-
-The panels show survival percentages by sex, ticket class and traveling alone. The vertical axis runs from 0 to 100%, and each bar is labeled with its percentage. The code takes the mean of the binary Survived outcome within each group and multiplies it by 100.
-
-### Finding and interpretation
-
-Female survival is 74.20%, compared with 18.89% for males. Rates by class are 62.96%, 47.28% and 24.24% for first, second and third class. IsAlone = 0 denotes recorded relatives, with 50.56% survival; IsAlone = 1 denotes traveling alone, with 30.35%. These differences do not establish causation.
-
-### Group sizes and comparison limits
-
-There are 314 females and 577 males; class sizes are 216, 184 and 491. There are 354 passengers with recorded relatives and 537 classified as alone. Rates compare outcomes within groups; no confidence intervals or significance tests are shown. Traveling alone concerns recorded relatives, not the absence of friends.
-
-
-## 4. Conclusions, Limits and Recommendations
-
-### Summary
-
-Survival rates vary by sex and class in this sample. The code also calculates survival among passengers classified as alone (30.35%) and those with recorded relatives (50.56%), and displays this comparison alongside sex and ticket class in the rate figure. IsAlone concerns relatives recorded in SibSp and Parch, not friends or all acquaintances.
-
-### Limitations
-
-Cabin remains extensively missing, and no cabin-availability feature is created. Imputed ages are not separately flagged and affect the age distribution. No significance tests, confidence intervals or adjusted models are included. The training sample does not cover every passenger, and the figures do not establish causes of survival.
+## Recommendations and handover
 
 ### Recommendations
 
-Preserve the raw source and disclose age imputation and missing Cabin information when presenting findings. Read counts and rates together; review source records before deleting high fares. If developing a model later, split the data first and fit imputation on training data only. These are future recommendations, not additional implemented processing steps.
+Preserve raw data and disclose age imputation and Cabin missingness when presenting results. Read rates alongside group sizes, and review context before deleting high fares. Further analysis could examine interactions among sex, class and age; that work is outside this delivery. For future prediction, split data first and fit imputation on training data only.
 
+### File checklist
 
-## 5. Files and Reproduction
-
-### Delivery files
-
-Titanic_cleaning.ipynb: code, analysis and saved outputs.
-train.csv: raw dataset.
-figures/: eight images extracted from notebook outputs.
-output/pdf/: Arabic and English reports.
-output/: editable versions of both reports.
+Titanic_cleaning.ipynb: code, tables and figures.
+train.csv: raw data. figures/: eight chart exports.
+output/pdf/: Arabic and English PDF reports.
+output/: editable report versions.
 README.md and requirements.txt: instructions and dependencies.
 
-### Running the analysis
+### Run and verify
 
-Install requirements.txt, open the notebook from the project directory containing train.csv, select a Python kernel, then choose Restart Kernel and Run All. In Colab, upload train.csv to the working directory. The code displays tables and figures in the notebook; it saves the rate figure under figures/ but does not export a cleaned CSV.
-
-### Verification and documentation
-
-Check notebook execution and data against 891 passengers, 342 survivors, 687 remaining missing Cabin values and eight displayed figures. Report date: 20 October 2026. Descriptive figures quoted in the commentary are calculated from the data to interpret the plots and do not imply additional charts or tests.
+Install requirements.txt, open the notebook from the project directory containing train.csv, select Python and choose Restart Kernel and Run All. In Colab, upload the CSV to the working directory. Verify 891 passengers, 342 survivors, 687 remaining missing Cabin values and eight displayed figures. The last cell saves the percentage chart under figures/; the code does not export a cleaned CSV.
