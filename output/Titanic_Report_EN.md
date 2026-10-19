@@ -1,6 +1,6 @@
 # Titanic Data Analysis Report
 
-Prepared by Abdelmonem | 19 October 2026
+Prepared by Abdelmonem | 20 October 2026
 
 
 ## Titanic Data Analysis Report
@@ -20,6 +20,45 @@ The delivery contains the notebook, raw dataset, eight figure exports and Arabic
 ### Interpretation
 
 Rates apply to the supplied dataset. Class, sex, age and recording practices may overlap; observed differences do not establish that one variable caused survival.
+
+
+## 4.4 Ages After Imputation
+
+### How to read the figure
+
+This figure shows age after 177 missing values were filled using median age within sex and ticket-class groups. Each bar covers five years; color distinguishes survival outcomes. KDE lines summarize distribution shape rather than survival rates.
+
+### Finding and limitations
+
+All 891 passengers are included. Many ages fall among young people and adults. Imputation can create peaks at group-median ages, so compare this figure with observed ages only. A larger count at an age does not imply a higher chance of survival.
+
+![4.4 Ages After Imputation](../figures/04_age_distribution.png)
+
+
+## 4.5 Observed Ages Only
+
+### How to read the figure
+
+Using the same age intervals, this figure selects passengers whose ages were recorded in the raw df using df[Age].notna(). Selection is based on the raw data, not the filled Age column. It includes 714 passengers and excludes 177 estimated ages from this figure only.
+
+### Finding and limitations
+
+The comparison shows how distribution shape depends on imputation. No rows are removed from the cleaned dataset; exclusion is limited to this plot. Passengers with known ages may differ from those with missing ages, so this check does not eliminate recording bias or establish an age effect on survival.
+
+![4.5 Observed Ages Only](../figures/05_age_observed_only.png)
+
+
+## 4.7 Age, Fare and Family Size
+
+### How to read the figure
+
+The matrix contains only Age, Fare and FamilySize. Off-diagonal panels compare two variables: column labels identify the horizontal axis and row labels the vertical axis. Diagonal panels show individual distributions. Color distinguishes survival outcomes.
+
+### Finding and limitations
+
+Survivor and non-survivor points overlap, so these variables do not completely separate outcomes. Age includes estimated values, fares are strongly skewed and family size is discrete. Natural clusters and visual associations do not establish causation or predictive accuracy. Passenger identifiers and binary features are not included.
+
+![4.7 Age, Fare and Family Size](../figures/07_pairplot.png)
 
 
 ## 1. Data Scope and Quality
@@ -99,32 +138,6 @@ The horizontal axis shows Pclass from 1 to 3; the vertical axis shows passenger 
 First class: 136 survivors and 80 non-survivors, a 62.96% survival rate. Second class: 87 survivors and 97 non-survivors, a 47.28% rate. Third class: 119 survivors and 372 non-survivors, a 24.24% rate. Third class is largest, with 491 passengers. Differences are descriptive and may overlap with sex, age and passenger location.
 
 
-## 3.4 Age Distribution by Survival
-
-![3.4 Age Distribution by Survival](../figures/04_age_distribution.png)
-
-### How to read the figure
-
-The horizontal axis shows age in five-year intervals from 0 to 80; the vertical axis shows passenger counts. Color distinguishes survival outcomes, and smooth KDE lines summarize distribution shapes. Overlapping bars show both groups but can obscure parts of them.
-
-### Finding and interpretation
-
-Many ages fall among young people and adults. The figure includes 177 ages estimated using group medians, which can create peaks at certain ages. More passengers at an age does not mean a higher survival probability. KDE curves are not survival probabilities or confidence intervals.
-
-
-## 3.5 Age Distribution with Bar Counts
-
-![3.5 Age Distribution with Bar Counts](../figures/05_age_distribution_labeled.png)
-
-### How to read the figure
-
-This is another view of the same post-imputation ages, with a different figure size, count labels and narrower bars using shrink. Five-year intervals and survival colors remain the same.
-
-### Finding and interpretation
-
-Labels help identify counts within intervals, but dense labels may require zooming. Both age figures use the same data; this is not an observed-age-only check or an independent analysis. The same imputation and overlapping-bar limitations apply.
-
-
 ## 3.6 Ticket Fares by Class
 
 ![3.6 Ticket Fares by Class](../figures/06_fare_boxplot.png)
@@ -136,19 +149,6 @@ The horizontal axis shows ticket class and the vertical axis shows Fare on its o
 ### Finding and interpretation
 
 First class shows higher fares and wider variation, with a maximum of approximately 512.33. Distant points are not confirmed errors. Boxplot whiskers are calculated within each class, whereas the outlier list in the code uses an overall file threshold of 65.6344. High fares are not deleted, and the figure does not use a logarithmic scale.
-
-
-## 3.7 Pairwise Relationships
-
-![3.7 Pairwise Relationships](../figures/07_pairplot.png)
-
-### How to read the figure
-
-Each off-diagonal panel shows two variables: the column label identifies the horizontal axis and the row label identifies the vertical axis. Diagonal panels show distributions. The nine variables are PassengerId, Pclass, Age, SibSp, Parch, Fare, FamilySize, IsAlone and Is Child. Blue represents non-survivors and orange represents survivors.
-
-### Finding and interpretation
-
-The outcomes overlap in many panels. PassengerId is an identifier, not an explanation of survival. Binary and discrete features naturally create clusters and lines. Age contains imputed values, and Fare is strongly skewed. The figure does not demonstrate causation or predictive accuracy. Use the accompanying PNG at a suitable zoom level to inspect the small panels.
 
 
 ## 3.8 Comparing Survival Percentages
@@ -200,4 +200,4 @@ Install requirements.txt, open the notebook from the project directory containin
 
 ### Verification and documentation
 
-Check notebook execution and data against 891 passengers, 342 survivors, 687 remaining missing Cabin values and eight displayed figures. Report date: 19 October 2026. Descriptive figures quoted in the commentary are calculated from the data to interpret the plots and do not imply additional charts or tests.
+Check notebook execution and data against 891 passengers, 342 survivors, 687 remaining missing Cabin values and eight displayed figures. Report date: 20 October 2026. Descriptive figures quoted in the commentary are calculated from the data to interpret the plots and do not imply additional charts or tests.

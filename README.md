@@ -47,9 +47,13 @@ Open `Titanic_cleaning.ipynb` from the project directory containing `train.csv`,
 5. Leave Cabin unchanged with 687 missing values. The cabin-feature lines are commented out.
 6. Identify 116 fares above the overall IQR upper fence of 65.6344 without removing them.
 7. Derive FamilySize, IsAlone and Is Child; the executed child condition is Age < 16.
-8. Display survival counts, counts by sex and class, two age histograms, a fare boxplot and a full pairplot.
+8. Display survival counts, counts by sex and class, age histograms after imputation and for observed ages only, a fare boxplot and a focused Age/Fare/FamilySize pairplot.
 9. Plot survival percentages by sex, class and traveling alone, label each bar, and save the rate chart.
 
 ## Limitations
 
 Missing cabin records remain unresolved. Age imputation can affect distribution peaks, and the code does not preserve an imputation indicator. High fares may be valid shared bookings. The sample does not cover every passenger, and no predictive model or significance tests are included. The supplied files do not independently document the dataset download source or usage terms.
+
+## Report layout
+
+After the executive summary, both reports begin with Ages After Imputation, Observed Ages Only, and Age, Fare and Family Size. Their explanations appear before the corresponding figures.
