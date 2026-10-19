@@ -17,3 +17,7 @@ The complete revised code is in `Titanic_analysis_updated.ipynb`.
 12. Added cleaned CSV/JSON exports and end-of-run integrity checks.
 
 These changes extend a descriptive analysis. No predictive model or causal claim is introduced.
+
+## Final delivery reporting - 19 October 2026
+
+Reframed the PDF and README as client-facing delivery documentation. Added scope, an executive summary, validation criteria, recommendations and a handover guide. Removed the historical-chart appendix from the final report; source figures remain available for traceability. Added an editable Arabic report. Analytical code, data and computed findings are unchanged.

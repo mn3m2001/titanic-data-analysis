@@ -1,14 +1,14 @@
 # Titanic: Data Cleaning & Survival Analysis
 
-A reproducible Python portfolio project that turns passenger records into a documented cleaning workflow and interpretable survival comparisons.
+Final delivery documentation for the Titanic passenger-data cleaning and descriptive survival analysis.
 
-**Author:** Abdelmonem — Data Analyst & Aspiring Data Scientist
+**Prepared by:** Abdelmonem | **Report date:** 19 October 2026
 
 ![Survival comparisons](figures/08_survival_rates.png)
 
-## Project overview
+## Delivery scope
 
-The analysis examines missing values, ticket fares, family relationships and survival patterns in the provided Titanic training data. The revised notebook includes complete code, Arabic explanations below every chart, a change map and automatically exported results. The original notebook is preserved.
+The analysis examines missing values, ticket fares, family relationships and survival patterns in the provided Titanic training data. The delivery contains an executed notebook, cleaned data, nine chart exports, a computed metrics summary and a detailed Arabic report. Processing decisions, validation results and analytical limitations are documented for review and reuse.
 
 ### Questions explored
 
@@ -30,20 +30,25 @@ The analysis examines missing values, ticket fares, family relationships and sur
 
 These are descriptive associations within the supplied training sample. They do not establish causation or predictive performance.
 
-## Repository contents
+## Delivery files
 
 | File or folder | Purpose |
 |---|---|
-| [Titanic_analysis_updated.ipynb](Titanic_analysis_updated.ipynb) | Complete revised notebook with executed results and marked changes |
-| [Titanic_cleaning.ipynb](Titanic_cleaning.ipynb) | Preserved original work |
+| [Titanic_analysis_updated.ipynb](Titanic_analysis_updated.ipynb) | Complete analysis code and executed results |
+| [Titanic_cleaning.ipynb](Titanic_cleaning.ipynb) | Historical source notebook retained for traceability |
 | `train.csv` | Original supplied passenger dataset |
-| [figures/](figures/) | Nine revised PNG chart exports |
-| [figures/original/](figures/original/) | Seven figures extracted from the original notebook |
+| [figures/](figures/) | Nine final PNG chart exports |
+| [figures/original/](figures/original/) | Historical source figures retained for traceability |
 | [output/titanic_cleaned.csv](output/titanic_cleaned.csv) | Cleaned data with engineered features |
 | [output/analysis_summary.json](output/analysis_summary.json) | Computed analysis metrics |
-| [Detailed Arabic PDF](output/pdf/Titanic_Analysis_Report_AR.pdf) | Cleaning steps, charts, interpretation and original-chart appendix |
+| [Detailed Arabic PDF](output/pdf/Titanic_Client_Delivery_Report_AR.pdf) | Executive summary, scope, methods, chart interpretations, recommendations and handover checks |
+| [Editable Arabic report](output/Client_Delivery_Report_AR.md) | Editable counterpart of the final PDF |
 | [CHANGELOG.md](CHANGELOG.md) | Changes compared with the original notebook |
 | [requirements.txt](requirements.txt) | Notebook dependencies |
+
+## Validation checks
+
+The delivered notebook was executed from top to bottom: **15 code cells completed without errors**. Checks confirmed preservation of 891 rows and the survival labels, unique passenger IDs, documented remaining Cabin missingness and existence of all nine final chart exports. The cleaned CSV contains 19 columns.
 
 ## Run locally
 
@@ -72,7 +77,7 @@ On Google Colab, upload the revised notebook and `train.csv` to the same working
 7. Derive `FamilySize`, `IsAlone` and `IsChild`; distinguish observed and imputed ages.
 8. Compare both counts and rates, annotate charts and export reproducible results.
 
-## Limits and data provenance
+## Analytical limitations and source documentation
 
 The local `train.csv` was supplied with the project and uses the familiar Titanic training-data schema. Its original download location and redistribution terms were not independently documented in the supplied files. No new license is asserted for the dataset.
 
