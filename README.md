@@ -20,8 +20,8 @@ These are descriptive associations within the supplied sample, not causal effect
 |---|---|
 | [Titanic_cleaning.ipynb](Titanic_cleaning.ipynb) | Analysis code and saved outputs |
 | [train.csv](train.csv) | Raw passenger data |
-| [figures/](figures/) | Seven figures from the notebook |
-| [Arabic PDF](output/pdf/Titanic_Report_AR.pdf) | Methods, all seven figures, interpretations and limitations |
+| [figures/](figures/) | Eight figures from the notebook |
+| [Arabic PDF](output/pdf/Titanic_Report_AR.pdf) | Methods, all eight figures, interpretations and limitations |
 | [English PDF](output/pdf/Titanic_Report_EN.pdf) | English analysis report |
 | [Arabic text](output/Titanic_Report_AR.md) | Editable report |
 | [English text](output/Titanic_Report_EN.md) | Editable report |
@@ -36,7 +36,7 @@ python -m pip install -r requirements.txt
 python -m jupyterlab
 ```
 
-Open `Titanic_cleaning.ipynb` from the project directory containing `train.csv`, select the Python kernel and choose **Restart Kernel and Run All**. On Colab, upload the CSV to the working directory. Figures and tables are displayed inside the notebook; the code does not automatically export PNGs or a cleaned CSV.
+Open `Titanic_cleaning.ipynb` from the project directory containing `train.csv`, select the Python kernel and choose **Restart Kernel and Run All**. On Colab, upload the CSV to the working directory. Figures and tables are displayed inside the notebook; the final cell saves the rate chart to figures/08_survival_rates.png; it does not export a cleaned CSV.
 
 ## Workflow
 
@@ -48,6 +48,7 @@ Open `Titanic_cleaning.ipynb` from the project directory containing `train.csv`,
 6. Identify 116 fares above the overall IQR upper fence of 65.6344 without removing them.
 7. Derive FamilySize, IsAlone and Is Child; the executed child condition is Age < 16.
 8. Display survival counts, counts by sex and class, two age histograms, a fare boxplot and a full pairplot.
+9. Plot survival percentages by sex, class and traveling alone, label each bar, and save the rate chart.
 
 ## Limitations
 

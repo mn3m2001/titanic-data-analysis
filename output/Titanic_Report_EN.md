@@ -7,7 +7,7 @@ Prepared by Abdelmonem | 19 October 2026
 
 ### Executive summary
 
-This analysis examines 891 passenger records to assess data quality and describe survival patterns. It covers missing-value handling, family and age features, and interpretation of the seven figures produced by the notebook.
+This analysis examines 891 passenger records to assess data quality and describe survival patterns. It covers missing-value handling, family and age features, and interpretation of the eight figures produced by the notebook.
 
 ### Key findings
 
@@ -15,7 +15,7 @@ This analysis examines 891 passenger records to assess data quality and describe
 
 ### Delivery status and scope
 
-The delivery contains the notebook, raw dataset, seven figure exports and Arabic and English reports. The work covers data cleaning and descriptive analysis; it does not include a predictive model or causal-effect estimation.
+The delivery contains the notebook, raw dataset, eight figure exports and Arabic and English reports. The work covers data cleaning and descriptive analysis; it does not include a predictive model or causal-effect estimation.
 
 ### Interpretation
 
@@ -151,11 +151,28 @@ Each off-diagonal panel shows two variables: the column label identifies the hor
 The outcomes overlap in many panels. PassengerId is an identifier, not an explanation of survival. Binary and discrete features naturally create clusters and lines. Age contains imputed values, and Fare is strongly skewed. The figure does not demonstrate causation or predictive accuracy. Use the accompanying PNG at a suitable zoom level to inspect the small panels.
 
 
+## 3.8 Comparing Survival Percentages
+
+![3.8 Comparing Survival Percentages](../figures/08_survival_rates.png)
+
+### How to read the figure
+
+The panels show survival percentages by sex, ticket class and traveling alone. The vertical axis runs from 0 to 100%, and each bar is labeled with its percentage. The code takes the mean of the binary Survived outcome within each group and multiplies it by 100.
+
+### Finding and interpretation
+
+Female survival is 74.20%, compared with 18.89% for males. Rates by class are 62.96%, 47.28% and 24.24% for first, second and third class. IsAlone = 0 denotes recorded relatives, with 50.56% survival; IsAlone = 1 denotes traveling alone, with 30.35%. These differences do not establish causation.
+
+### Group sizes and comparison limits
+
+There are 314 females and 577 males; class sizes are 216, 184 and 491. There are 354 passengers with recorded relatives and 537 classified as alone. Rates compare outcomes within groups; no confidence intervals or significance tests are shown. Traveling alone concerns recorded relatives, not the absence of friends.
+
+
 ## 4. Conclusions, Limits and Recommendations
 
 ### Summary
 
-Survival rates vary by sex and class in this sample. The code also calculates survival among passengers classified as alone (30.35%) and those with recorded relatives (50.56%), but does not create a separate figure for that comparison. IsAlone concerns relatives recorded in SibSp and Parch, not friends or all acquaintances.
+Survival rates vary by sex and class in this sample. The code also calculates survival among passengers classified as alone (30.35%) and those with recorded relatives (50.56%), and displays this comparison alongside sex and ticket class in the rate figure. IsAlone concerns relatives recorded in SibSp and Parch, not friends or all acquaintances.
 
 ### Limitations
 
@@ -172,15 +189,15 @@ Preserve the raw source and disclose age imputation and missing Cabin informatio
 
 Titanic_cleaning.ipynb: code, analysis and saved outputs.
 train.csv: raw dataset.
-figures/: seven images extracted from notebook outputs.
+figures/: eight images extracted from notebook outputs.
 output/pdf/: Arabic and English reports.
 output/: editable versions of both reports.
 README.md and requirements.txt: instructions and dependencies.
 
 ### Running the analysis
 
-Install requirements.txt, open the notebook from the project directory containing train.csv, select a Python kernel, then choose Restart Kernel and Run All. In Colab, upload train.csv to the working directory. The code displays tables and figures in the notebook; it does not automatically save images or export a CSV.
+Install requirements.txt, open the notebook from the project directory containing train.csv, select a Python kernel, then choose Restart Kernel and Run All. In Colab, upload train.csv to the working directory. The code displays tables and figures in the notebook; it saves the rate figure under figures/ but does not export a cleaned CSV.
 
 ### Verification and documentation
 
-Check notebook execution and data against 891 passengers, 342 survivors, 687 remaining missing Cabin values and seven displayed figures. Report date: 19 October 2026. Descriptive figures quoted in the commentary are calculated from the data to interpret the plots and do not imply additional charts or tests.
+Check notebook execution and data against 891 passengers, 342 survivors, 687 remaining missing Cabin values and eight displayed figures. Report date: 19 October 2026. Descriptive figures quoted in the commentary are calculated from the data to interpret the plots and do not imply additional charts or tests.
